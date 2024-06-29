@@ -11,8 +11,8 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 const httpsOptions = {
-  key: fs.readFileSync(path.resolve('/home/joe/hackathon/droneislove/api/key.pem')),
-  cert: fs.readFileSync(path.resolve('/home/joe/hackathon/droneislove/api/cert.pem')),
+  key: fs.readFileSync(path.resolve('/home/joe/hackathon/droneislove/api/localhost-key.pem')),
+  cert: fs.readFileSync(path.resolve('/home/joe/hackathon/droneislove/api/localhost.pem')),
 };
 
 app.prepare().then(() => {

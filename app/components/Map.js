@@ -8,14 +8,8 @@ export function Map() {
   const [lastUpdate, setLastUpdate] = useState(0);
 
   const fetchVolumes = async () => {
-
-    // fetch('/api/getvolumes').then(response => {
-    //     return response.json()
-    // }).then(data => {
-    //     setVolumes(data);
-    // });
     const response = await axios.get("/api/getvolumes");
-    setVolumes(response.data());
+    setVolumes(response.data);
   };
     useEffect(() => {
         const interval = setInterval(() => {
