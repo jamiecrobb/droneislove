@@ -29,5 +29,4 @@ def get_volumes():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, ssl_context=(
-        '../frontend/cert.pem', '../frontend/key.pem'))
+    app.run(debug=True)
