@@ -32,7 +32,7 @@ class LocalisationModel:
 
     def infer(self, distance: float) -> float:
         x = max(0, np.power(10, np.log10(distance) * self._m + self._c))
-        print(f"Inferring that we should be at {np.power(10, x)} reading for a distance of {distance}")
+        print(f"Inferring that we should be at {x} reading for a distance of {distance}")
         return x
 
 
