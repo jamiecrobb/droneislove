@@ -21,6 +21,7 @@ def send_volume():
     data_str = request.data.decode('utf-8')
     data = json.loads(data_str)
     new = data["device_id"] not in volumes
+    old_entry = volumes.get(data["device_id"], None)
     volumes[data['device_id']] = {
         "volume": data['volume'],
         "last_updated" : time.time()
@@ -28,6 +29,9 @@ def send_volume():
     if new:
         volumes[data["device_id"]]["position"] = \
             (random.random(), random.random())
+    else:
+        volumes[data["device_id"]]["position"] = \
+            old_entry["position"]
     return response, 200
 
 
