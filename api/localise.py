@@ -38,6 +38,8 @@ class Localiser:
         self._n_samples = n_samples
 
     def localise(self, observations: list[float], positions: list[tuple[float, float]]) -> NDArray[np.float32]:
+        if len(observations) == 0 or len(positions) == 0:
+            return np.array([0.0, 0.0])
         # determine the boundaries of the sample space
         minX = min(map(lambda x: x[0], positions))
         maxX = max(map(lambda x: x[0], positions))
