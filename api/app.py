@@ -43,9 +43,11 @@ def get_coordinate():
         x["volume"] for x in volumes.values()
     ]
     estimate = localiser.localise(observations, positions)
+    import random
     response = jsonify({
         "x" : estimate[0],
-        "y" : estimate[1]
+        "y" : estimate[1],
+        "confidence": random.random()
     })
     return response, 200
 
