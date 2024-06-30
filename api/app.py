@@ -53,7 +53,7 @@ def get_volumes():
 
 @app.route("/getcoordinate")
 def get_coordinate():
-    min_volume = 0.3
+    min_volume = 0.2
     indices = [
         i for i, val in enumerate(volumes.values()) if val["volume"] > min_volume
     ]
