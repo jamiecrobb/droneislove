@@ -79,7 +79,11 @@ export function AudioRecorder() {
   useEffect(() => {
     const getMicrophoneAccess = async () => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: {
+          echoCancellation: false,
+          // noiseSuppression: false,
+          autoGainControl: false,
+        } });
         audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
         const source = audioContextRef.current.createMediaStreamSource(stream);
 
@@ -92,7 +96,9 @@ export function AudioRecorder() {
             sum += Math.abs(inputBuffer[i]); //* inputBuffer[i];
             // console.log(inputBuffer[i]);
           }
-          const rms = sum / inputBuffer.length;
+          // const rms = sum / inputBuffer.length;
+          
+          const rms = Math.abs(inputBuffer[inputBuffer.length - 1]);
           const average = rms * 100;
 
           // Add the new volume to the kernel buffer
@@ -146,7 +152,9 @@ export function AudioRecorder() {
 
       const data = {
         "device_id": device_id,
-        "volume": volume.toFixed(2),
+        "x": Math.random()*4,
+        "y": Math.random()*4,
+        "volume": volume,
       }
 
       const response = await fetch(`/api/sendvolume`, {
@@ -157,16 +165,6 @@ export function AudioRecorder() {
         body: JSON.stringify(data)
       })
 
-      // await axios.post(`${API_ENDPOINT}/sendvolume/`, data, {
-      //   headers: {
-      //     "content-type": "json",
-      //   }
-      // })
-
-      // const response = await fetch(`${API_ENDPOINT}/sendvolume/${device_id}/${(volume*100).toFixed(0)}`);
-      // if (!response.ok) {
-      //   throw new Error(`Failed to send volume. Status: ${response.status.toString()}`);
-      // }
     } catch (error) {
       console.error('Error sending volume:', error);
     }
