@@ -37,10 +37,10 @@ def get_volumes():
 @app.route("/getcoordinate")
 def get_coordinate():
     positions = [
-        x["position"] for x in volumes
+        x["position"] for x in volumes.values()
     ]
     observations = [
-        x["volume"] for x in volumes
+        x["volume"] for x in volumes.values()
     ]
     estimate = localiser.localise(observations, positions)
     response = jsonify({
