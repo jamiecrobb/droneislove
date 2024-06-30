@@ -23,7 +23,7 @@ class LocalisationModel:
         pt2 = np.array(list(map(float, lines[1])))
         gradient = (pt2[1] - pt1[1]) / (pt2[0] - pt1[0])
         y_int = pt1[1] - gradient * pt1[0]
-        sigma = float(lines[3][0])
+        sigma = float(lines[2][0])
         return LocalisationModel(gradient, y_int, sigma)
 
     def infer(self, distance: float) -> float:
