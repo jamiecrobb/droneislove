@@ -3,6 +3,7 @@ from flask_cors import CORS
 import json
 import time
 from .localise import LocalisationModel, Localiser
+import random
 
 app = Flask(__name__)
 CORS(app)  # This will enable CORS for all routes
@@ -21,9 +22,10 @@ def send_volume():
     data = json.loads(data_str)
     volumes[data['device_id']] = {
         "volume": data['volume'],
-        "position": (data["x"], data["y"]),
         "last_updated" : time.time()
     }
+    if "position" not in volumes[data['device_id']]:
+        volumes[data['device_id']]["position"] = (random.random(), random.random())
     return response, 200
 
 
@@ -43,7 +45,6 @@ def get_coordinate():
         x["volume"] for x in volumes.values()
     ]
     estimate = localiser.localise(observations, positions)
-    import random
     response = jsonify({
         "x" : estimate[0],
         "y" : estimate[1],
