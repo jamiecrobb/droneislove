@@ -18,9 +18,9 @@ class LocalisationModel:
         with open(path, 'r', encoding="utf-8") as f:
             lines = [l.strip().split(",") for l in f.readlines()]
         assert len(
-            lines) == 3, "Expected file with two lines, each with format 'dist, volume'."
+            lines) == 3, "Expected file with three lines, first two format 'dist, volume'."
         assert all(len(
-            x) == 2 for x in lines[:2]), "Expected file with two lines, each with format 'dist, volume'."
+            x) == 2 for x in lines[:2]), "Expected file with three lines, first two with format 'dist, volume'."
         assert len(
             lines[2]) == 1, "Expected final line to contain a single value for sigma."
         pt1 = np.array(list(map(float, lines[0])))
@@ -28,6 +28,7 @@ class LocalisationModel:
         gradient = (pt2[1] - pt1[1]) / (pt2[0] - pt1[0])
         y_int = pt1[1] - gradient * pt1[0]
         sigma = float(lines[2][0])
+        print(f"{pt1=} {pt2}")
         return LocalisationModel(gradient, y_int, sigma)
 
     def infer(self, distance: float) -> float:
