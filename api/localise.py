@@ -19,8 +19,8 @@ class LocalisationModel:
         assert len(lines) == 3, "Expected file with two lines, each with format 'dist, volume'."
         assert all(len(x) == 2 for x in lines[:2]), "Expected file with two lines, each with format 'dist, volume'."
         assert len(lines[2]) == 1, "Expected final line to contain a single value for sigma."
-        pt1 = np.array(map(float, lines[0]))
-        pt2 = np.array(map(float, lines[1]))
+        pt1 = np.array(list(map(float, lines[0])))
+        pt2 = np.array(list(map(float, lines[1])))
         gradient = (pt2[1] - pt1[1]) / (pt2[0] - pt1[0])
         y_int = pt1[1] - gradient * pt1[0]
         sigma = float(lines[3][0])
