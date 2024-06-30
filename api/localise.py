@@ -4,6 +4,7 @@ import numpy as np
 from numpy.typing import NDArray
 from scipy.stats import norm
 
+
 class LocalisationModel:
     def __init__(self, m: float, c: float, sigma: float) -> None:
         self._m = m
@@ -16,9 +17,12 @@ class LocalisationModel:
         assert path.exists() and path.is_file(), "Invalid file."
         with open(path, 'r', encoding="utf-8") as f:
             lines = [l.strip().split(",") for l in f.readlines()]
-        assert len(lines) == 3, "Expected file with two lines, each with format 'dist, volume'."
-        assert all(len(x) == 2 for x in lines[:2]), "Expected file with two lines, each with format 'dist, volume'."
-        assert len(lines[2]) == 1, "Expected final line to contain a single value for sigma."
+        assert len(
+            lines) == 3, "Expected file with two lines, each with format 'dist, volume'."
+        assert all(len(
+            x) == 2 for x in lines[:2]), "Expected file with two lines, each with format 'dist, volume'."
+        assert len(
+            lines[2]) == 1, "Expected final line to contain a single value for sigma."
         pt1 = np.array(list(map(float, lines[0])))
         pt2 = np.array(list(map(float, lines[1])))
         gradient = (pt2[1] - pt1[1]) / (pt2[0] - pt1[0])
@@ -32,10 +36,12 @@ class LocalisationModel:
     def likelihood(self, expected_volume, observed_volume) -> float:
         coefficient = 1 / np.sqrt(2 * np.pi * self._sigma**2)
         # Calculate the exponent
-        exponent = -((observed_volume - expected_volume)**2) / (2 * self._sigma**2)
-        # Calculate the PDF value
+        exponent = -((observed_volume - expected_volume)**2) / \
+            (2 * self._sigma**2)
+        # Calculate the PDF value]
         pdf_value = coefficient * np.exp(exponent)
         return pdf_value
+
 
 class Localiser:
     def __init__(self, n_samples: int, model: LocalisationModel) -> None:
