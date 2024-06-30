@@ -53,12 +53,17 @@ def get_volumes():
 
 @app.route("/getcoordinate")
 def get_coordinate():
+    min_volume = 0.3
+    indices = [
+        i for i, val in enumerate(volumes.values()) if val["volume"] > min_volume
+    ]
     positions = [
-        x["position"] for x in volumes.values()
+        x["position"] for i, x in enumerate(volumes.values()) if i in indices
     ]
     observations = [
-        x["volume"] for x in volumes.values()
+        x["volume"] for i, x in enumerate(volumes.values()) if i in indices
     ]
+    print(f"len(observations) observations with significant reading")
     estimate = localiser.localise(observations, positions)
     response = jsonify({
         "x": estimate[0],
