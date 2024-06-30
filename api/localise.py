@@ -28,13 +28,10 @@ class LocalisationModel:
         gradient = (pt2[1] - pt1[1]) / (pt2[0] - pt1[0])
         y_int = pt1[1] - gradient * pt1[0]
         sigma = float(lines[2][0])
-        print(f"{pt1=} {pt2}")
         return LocalisationModel(gradient, y_int, sigma)
 
     def infer(self, distance: float) -> float:
-        x = max(0, np.power(10, np.log10(distance) * self._m + self._c))
-        # print(f"Inferring that we should be at {x} reading for a distance of {distance}")
-        print(f"{self._m=} {self._c=} {self._sigma=}")
+        x = max(0, np.exp(np.log(distance) * self._m + self._c))
         return x
 
 
