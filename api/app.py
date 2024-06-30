@@ -21,7 +21,7 @@ def send_volume():
     data = json.loads(data_str)
     volumes[data['device_id']] = {
         "volume": data['volume'],
-        "position": (data["pos_x"], data["pos_y"]),
+        "position": (data["x"], data["y"]),
         "last_updated" : time.time()
     }
     return response, 200
@@ -44,8 +44,8 @@ def get_coordinate():
     ]
     estimate = localiser.localise(observations, positions)
     response = jsonify({
-        "pos_x" : estimate[0],
-        "pos_y" : estimate[1]
+        "x" : estimate[0],
+        "y" : estimate[1]
     })
     return response, 200
 
