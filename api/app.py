@@ -14,6 +14,14 @@ localiser = Localiser(100, model)
 
 volumes = {}
 
+hardcoded_positions = [
+    (2, 0),
+    (0, 2),
+    (2, 2),
+    (0, 0),
+]
+hardcoded_positions_it = 0
+
 
 @app.route('/sendvolume', methods=['POST'])
 def send_volume():
@@ -28,7 +36,8 @@ def send_volume():
     }
     if new:
         volumes[data["device_id"]]["position"] = \
-            (random.random(), random.random())
+            hardcoded_positions[hardcoded_positions_it]
+        hardcoded_positions_it = (hardcoded_positions_it + 1) % len(hardcoded_positions)
     else:
         volumes[data["device_id"]]["position"] = \
             old_entry["position"]
