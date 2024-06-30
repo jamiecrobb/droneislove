@@ -29,18 +29,14 @@ def send_volume():
     data_str = request.data.decode('utf-8')
     data = json.loads(data_str)
     new = data["device_id"] not in volumes
-    old_entry = volumes.get(data["device_id"], None)
-    volumes[data['device_id']] = {
-        "volume": data['volume'],
-        "last_updated" : time.time()
-    }
-    if new:
-        volumes[data["device_id"]]["position"] = \
+    prev_entry = volumes.get(data["device_id"], {})
+    prev_entry["volume"] = data["volume"]
+    prev_entry["last_updated"] = time.time()
+    if "position" not in prev_entry:
+        prev_entry["position"] = \
             hardcoded_positions[hardcoded_positions_it]
         hardcoded_positions_it = (hardcoded_positions_it + 1) % len(hardcoded_positions)
-    else:
-        volumes[data["device_id"]]["position"] = \
-            old_entry["position"]
+    volumes[data["device_id"]] = new
     return response, 200
 
 
