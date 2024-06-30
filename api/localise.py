@@ -30,7 +30,12 @@ class LocalisationModel:
         return max(0.0, distance * self._m + self._c)
 
     def likelihood(self, expected_volume, observed_volume) -> float:
-        return norm.pdf(observed_volume, expected_volume, self._sigma)
+        coefficient = 1 / np.sqrt(2 * np.pi * self._sigma**2)
+        # Calculate the exponent
+        exponent = -((observed_volume - expected_volume)**2) / (2 * self._sigma**2)
+        # Calculate the PDF value
+        pdf_value = coefficient * np.exp(exponent)
+        return pdf_value
 
 class Localiser:
     def __init__(self, n_samples: int, model: LocalisationModel) -> None:
