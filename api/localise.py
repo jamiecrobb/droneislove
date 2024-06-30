@@ -32,6 +32,7 @@ class LocalisationModel:
 
     def infer(self, distance: float) -> float:
         x = max(0, np.exp(np.log(distance) * self._m + self._c))
+        print(f"Expecting a reading of {x} for a distance of {distance}")
         return x
 
 
