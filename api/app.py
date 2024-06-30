@@ -15,9 +15,9 @@ localiser = Localiser(100, model)
 volumes = {}
 
 hardcoded_positions = [
-    (8, 2),
-    (2, 8),
-    (8, 8),
+    (2.5, 2),
+    (2, 2.5),
+    (2.5, 2.5),
     (2, 2),
 ]
 hardcoded_positions_it = 0
